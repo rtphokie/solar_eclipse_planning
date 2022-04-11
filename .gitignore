@@ -1,0 +1,6 @@
+**.kmz
+**.kml
+**.cache
+**.pkl
+.idea/
+venv/
