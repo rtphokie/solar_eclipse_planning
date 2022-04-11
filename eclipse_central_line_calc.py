@@ -111,7 +111,7 @@ def binary_search_closest_driving_distance(origin, coordinatelist):
     i = 0
     width = high - low
 
-    prevmid=999999999
+    previous_midtime = float("inf")
 
     while width > 2:
         i += 1
@@ -124,23 +124,23 @@ def binary_search_closest_driving_distance(origin, coordinatelist):
             result = get_result(origin, dest, pt, coordinatelist)
             results.append(result)
             times.append(result['rows'][0]['elements'][0]['duration']['value'])
-        if prevmid < times[1]:
-            # retry with the other opposite half if driving times actually increased
-            if search=='down':
-                low=mid
+        if previous_midtime < times[1]:
+            # switch halves when driving times increase
+            if search == 'down':
+                low = mid
             else:
-                high=mid
+                high = mid
         else:
-            prevmid=times[1]
+            previous_midtime = times[1]
             deltaa = abs(times[0] - times[1])
             deltab = abs(times[1] - times[2])
             if deltaa < deltab:
-                high=mid
+                high = mid
                 search = 'down'
             else:
-                low=mid
+                low = mid
                 search = 'up '
         # print( f"{i:2} {width:3} {search} |{results[0]['destination_addresses'][0]} | {results[1]['destination_addresses'][0]}  | {results[2]['destination_addresses'][0]} {times}")
-    mintime=min(times)
-    minindex=times.index(mintime)
+    mintime = min(times)
+    minindex = times.index(mintime)
     return (results[minindex])
