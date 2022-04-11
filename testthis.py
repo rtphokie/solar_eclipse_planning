@@ -33,11 +33,17 @@ class MyTestCase(unittest.TestCase):
 
     def test_Raleigh(self):
         origin = (35.7796, -78.6382)
-        coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz')
+        coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz',name='Central Line')
         result = binary_search_closest_driving_distance(origin, coordinatelist)
         pprint(result)
-        self.assertAlmostEqual(result['destination_coordinates'][0], 40.44, 2)
-        self.assertAlmostEqual(result['destination_coordinates'][1], -84.25, 2)
+        self.assertAlmostEqual(result['destination_coordinates'][0], 40.64948, 2)
+        self.assertAlmostEqual(result['destination_coordinates'][1],  -83.83916 , 2)
+        coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz', name='Southern Limit')
+        result = binary_search_closest_driving_distance(origin, coordinatelist)
+        coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz', name='Northern Limit')
+        pprint(result)
+        result = binary_search_closest_driving_distance(origin, coordinatelist)
+        pprint(result)
 
     def test_Dalas(self):
         origin = (32.7767, -96.7970)
@@ -64,6 +70,25 @@ class MyTestCase(unittest.TestCase):
         pprint(result)
         self.assertAlmostEqual(result['destination_coordinates'][0], 37.82479, 2)
         self.assertAlmostEqual(result['destination_coordinates'][1],  -88.98, 2)
+
+
+    def test_Louisville(self):
+        origin = (38.25, -85.76)
+        coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz')
+        result = binary_search_closest_driving_distance(origin, coordinatelist)
+        pprint(result)
+        self.assertAlmostEqual(result['destination_coordinates'][0], 37.82479, 2)
+        self.assertAlmostEqual(result['destination_coordinates'][1],  -88.98, 2)
+
+    def test_Philly(self):
+        origin = (39.95, -75.17)
+        coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz')
+        result = binary_search_closest_driving_distance(origin, coordinatelist)
+        pprint(result)
+        self.assertAlmostEqual(result['destination_coordinates'][0], 37.82479, 2)
+        self.assertAlmostEqual(result['destination_coordinates'][1],  -88.98, 2)
+
+
 
 
 if __name__ == '__main__':

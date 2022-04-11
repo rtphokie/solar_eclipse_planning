@@ -68,7 +68,6 @@ def getdrivingdistance(origin, dest, line=2024):
         data = pickle.load(file)
         file.close()
         if key in data.keys():
-            # print('from cache')
             result = data[key]
         else:
             result = None
@@ -99,7 +98,6 @@ def get_result(origin, dest, pt, coordinatelist):
             else:
                 previous_country = 'Canada'
                 newpt -= 5
-            print(newpt)
             dest = (coordinatelist[newpt][0], coordinatelist[newpt][1])
             result = getdrivingdistance(origin, dest, line=2024)
             result['destination_coordinates'] = dest
@@ -108,15 +106,13 @@ def get_result(origin, dest, pt, coordinatelist):
 
 
 def binary_search_closest_driving_distance(origin, coordinatelist):
-    # gmaps = googlemaps.Client(key=API_key)
-    coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz')
-    # some sensible bounds for the 2024 path, get us close to the US borders
     low = 488
     high = 743
     i = 0
     width = high - low
 
     prevmid=999999999
+
     while width > 2:
         i += 1
         width = high - low
@@ -134,7 +130,6 @@ def binary_search_closest_driving_distance(origin, coordinatelist):
                 low=mid
             else:
                 high=mid
-            continue
         else:
             prevmid=times[1]
             deltaa = abs(times[0] - times[1])
@@ -145,9 +140,7 @@ def binary_search_closest_driving_distance(origin, coordinatelist):
             else:
                 low=mid
                 search = 'up '
-        print( f"{i:2} {width:3} {search} |{results[0]['destination_addresses'][0]} | {results[1]['destination_addresses'][0]}  | {results[2]['destination_addresses'][0]} {times}")
-
-        # print(search, width, coordinatelist[mid], results[0]['destination_addresses'][0])
+        # print( f"{i:2} {width:3} {search} |{results[0]['destination_addresses'][0]} | {results[1]['destination_addresses'][0]}  | {results[2]['destination_addresses'][0]} {times}")
     mintime=min(times)
     minindex=times.index(mintime)
     return (results[minindex])
