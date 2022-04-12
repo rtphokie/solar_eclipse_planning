@@ -89,6 +89,25 @@ class MyTestCase(unittest.TestCase):
         self.assertAlmostEqual(result['destination_coordinates'][1],  -88.98, 2)
 
 
+    def test_Seattle(self):
+        origin = (47.62, -122.35)
+        coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz')
+        result = binary_search_closest_driving_distance(origin, coordinatelist)
+        pprint(result)
+        self.assertAlmostEqual(result['destination_coordinates'][0], 37.82479, 2)
+        self.assertAlmostEqual(result['destination_coordinates'][1],  -88.98, 2)
+
+
+    def test_NOLA(self):
+        origin = (29.96, -90.1)
+        coordinatelist = get_central_path_coords(kmzfilename='TSE_2024_04_08.kmz')
+        result = binary_search_closest_driving_distance(origin, coordinatelist)
+        pprint(result)
+        self.assertAlmostEqual(result['destination_coordinates'][0], 37.82479, 2)
+        self.assertAlmostEqual(result['destination_coordinates'][1],  -88.98, 2)
+
+
+
 
 
 if __name__ == '__main__':
